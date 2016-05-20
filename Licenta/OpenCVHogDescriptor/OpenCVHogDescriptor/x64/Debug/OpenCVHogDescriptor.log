@@ -1,0 +1,8 @@
+﻿  Source.cpp
+c:\users\lucian\documents\visual studio 2015\projects\opencvhogdescriptor\opencvhogdescriptor\source.cpp(26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\opencvhogdescriptor\opencvhogdescriptor\source.cpp(148): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\opencvhogdescriptor\opencvhogdescriptor\source.cpp(149): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\opencvhogdescriptor\opencvhogdescriptor\source.cpp(160): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\opencvhogdescriptor\opencvhogdescriptor\source.cpp(161): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\opencvhogdescriptor\opencvhogdescriptor\source.cpp(284): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  OpenCVHogDescriptor.vcxproj -> C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\x64\Debug\OpenCVHogDescriptor.exe

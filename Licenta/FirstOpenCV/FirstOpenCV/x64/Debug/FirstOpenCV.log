@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\source.cpp(253): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\source.cpp(403): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  FirstOpenCV.vcxproj -> C:\Users\Lucian\Documents\Visual Studio 2015\Projects\FirstOpenCV\x64\Debug\FirstOpenCV.exe
