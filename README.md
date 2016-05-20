@@ -1,0 +1,2 @@
+# Licenta
+Img Processing.
