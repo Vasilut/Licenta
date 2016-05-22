@@ -49,6 +49,7 @@
     <Compile Include="ReadFile.cs" />
     <Compile Include="SigmoidActivationFunction.cs" />
     <Compile Include="TrainerAnn.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

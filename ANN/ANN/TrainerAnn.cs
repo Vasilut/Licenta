@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ANN
 {
@@ -15,24 +16,69 @@ namespace ANN
             _neuronalNetwork = neuronalNetwork;
             _neuronalNetwork.InitializeNetwork();
             _trainSet = rf.GetTextContains();
+            File.WriteAllText("pua.txt", string.Empty);
         }
-        
+
         public void DoTrain(int trainingTimes)
         {
             _trainingTimes = trainingTimes;
             //loop for n-many training times
             for (int i = 0; i < _trainingTimes; ++i)
             {
-                for(int j = 0; j < _trainSet.Count; ++j)
+                for (int j = 0; j < _trainSet.Count; ++j)
                 {
                     // Train using example set
                     List<double> values = _trainSet[j].Item1;
                     //feed forward through network
-                    _neuronalNetwork.Forward(values, _trainSet[j].Item2);
+                    _neuronalNetwork.Forward(values, _trainSet[j].Item2, i);
                     //do the weight changes (pass back)
                     TrainNetwork(_trainSet[j].Item2);
                 }
             }
+        }
+
+        public void TestRun(int trainingTimes)
+        {
+            _trainingTimes = trainingTimes;
+            //for each picture we'll take out from the dataset, we'll train the network without this data set
+            //and then we'll verify with this input
+            for (int indicePoze = 0; indicePoze < _trainSet.Count; ++indicePoze)
+            {
+                List<double> values = _trainSet[indicePoze].Item1;
+
+                //cross over
+                //for (int i = 0; i < _trainingTimes; ++i)
+                //{
+                //    for (int j = 0; j < _trainSet.Count; ++j)
+                //    {
+                //        if( j == indicePoze)
+                //        {
+                //            continue;
+                //        }
+                //        // Train using example set
+                //        List<double> valori = _trainSet[j].Item1;
+                //        //feed forward through network
+                //        _neuronalNetwork.Forward(valori, _trainSet[j].Item2, i);
+                //        //do the weight changes (pass back)
+                //        TrainNetwork(_trainSet[j].Item2);
+                //    }
+                //}
+                
+                _neuronalNetwork.Forward(values, _trainSet[indicePoze].Item2, 0);
+
+                Tuple<double, int> rezultMax = Utility.GetMaxim(_neuronalNetwork.Outputs, _neuronalNetwork.OutputNeuron);
+                int pozMax = rezultMax.Item2;
+                double maxx = rezultMax.Item1;
+
+                using (var wr = new StreamWriter("pua.txt", true))
+                {
+                    wr.WriteLine(_neuronalNetwork.Outputs[0] + " " + _neuronalNetwork.Outputs[1] + " " +
+                                _neuronalNetwork.Outputs[2] + " Target " + " " + (_trainSet[indicePoze].Item2 - 1)
+                                + " Maximul: " + maxx + " Poz Maxima : " + pozMax);
+                    wr.WriteLine("---------------------------");
+                }
+            }
+
         }
 
         private void TrainNetwork(double multime)
@@ -42,17 +88,17 @@ namespace ANN
             double[] delta_outputs = new double[_neuronalNetwork.OutputNeuron];
 
             // Get the delta value for the output layer
-            for(int i = 0; i < _neuronalNetwork.OutputNeuron; ++i)
+            for (int i = 0; i < _neuronalNetwork.OutputNeuron; ++i)
             {
                 delta_outputs[i] =
                     _neuronalNetwork.Outputs[i] * (1.0 - _neuronalNetwork.Outputs[i]) * (multime - _neuronalNetwork.Outputs[i]);
             }
 
             // Get the delta value for the hidden layer
-            for(int i = 0; i < _neuronalNetwork.HiddenNeuron; ++i)
+            for (int i = 0; i < _neuronalNetwork.HiddenNeuron; ++i)
             {
                 double error = 0.0;
-                for(int j = 0; j < _neuronalNetwork.OutputNeuron; ++j)
+                for (int j = 0; j < _neuronalNetwork.OutputNeuron; ++j)
                 {
                     error += _neuronalNetwork.HiddenToOutputWeight[i, j] * delta_outputs[j];
                 }
@@ -60,9 +106,9 @@ namespace ANN
             }
 
             // Now update the weights between hidden & output layer
-            for(int i = 0; i < _neuronalNetwork.OutputNeuron; ++i)
+            for (int i = 0; i < _neuronalNetwork.OutputNeuron; ++i)
             {
-                for(int j = 0; j < _neuronalNetwork.HiddenNeuron; ++j)
+                for (int j = 0; j < _neuronalNetwork.HiddenNeuron; ++j)
                 {
                     //use momentum (delta values from last pass), 
                     //to ensure moved in correct direction
@@ -71,9 +117,9 @@ namespace ANN
             }
 
             // Now update the weights between input & hidden layer
-            for(int i = 0; i < _neuronalNetwork.HiddenNeuron; ++i)
+            for (int i = 0; i < _neuronalNetwork.HiddenNeuron; ++i)
             {
-                for(int j = 0; j < _neuronalNetwork.InputNeuron; ++j)
+                for (int j = 0; j < _neuronalNetwork.InputNeuron; ++j)
                 {
                     //use momentum (delta values from last pass), 
                     //to ensure moved in correct direction

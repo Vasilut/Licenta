@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ANN
 {
@@ -33,7 +34,6 @@ namespace ANN
             _inputs = new double[_inputNeuron];
             _hidden = new double[_hiddenNeuron];
             _outputs = new double[_outputNeuron];
-
         }
 
         public double[,] HiddenToOutputWeight
@@ -95,7 +95,7 @@ namespace ANN
             }
         }
 
-        public void Forward(List<double> trainingInputs, double target)
+        public void Forward(List<double> trainingInputs, double target, int epoca)
         {
             //Load the initial input layer
             for (int i = 0; i < _inputNeuron; ++i)
@@ -126,8 +126,8 @@ namespace ANN
                 // pass the sum, through the activation function, Sigmoid in this case
                 _outputs[i] = SigmoidActivationFunction.processValue(sum);
             }
-
-            Console.WriteLine(_outputs[0] + " " + _outputs[1] + " " + _outputs[2] + " Target " + " " + target);
+            
+            Console.WriteLine(_outputs[0] + " " + _outputs[1] + " " + _outputs[2] + " Target " + " " + target + " Epoca" + epoca );
         }
 
         public int InputNeuron { get { return _inputNeuron; } set { _inputNeuron = value; } }
