@@ -18,7 +18,7 @@ namespace ANN
         private double[] _hidden;
         private double[] _outputs;
 
-        private double _learningRate = 0.3;
+        private double _learningRate = 0.01;
         private Random _generatorRand = new Random();
 
 
@@ -127,7 +127,7 @@ namespace ANN
                 _outputs[i] = SigmoidActivationFunction.processValue(sum);
             }
             
-            Console.WriteLine(_outputs[0] + " " + _outputs[1] + " " + _outputs[2] + " Target " + " " + target + " Epoca" + epoca );
+            Console.WriteLine(_outputs[0] + " " + _outputs[1] + " " + _outputs[2] + " " + _outputs[3] + " " + _outputs[4] + " " +  _outputs[5] + " Target " + " " + target + " Epoca" + epoca );
         }
 
         public int InputNeuron { get { return _inputNeuron; } set { _inputNeuron = value; } }

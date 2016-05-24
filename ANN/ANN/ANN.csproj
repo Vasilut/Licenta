@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,16 +45,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageCategory.Designer.cs">
+      <DependentUpon>ImageCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="NeuronalNetwork.cs" />
+    <Compile Include="ProcesInitiator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadFile.cs" />
+    <Compile Include="RunApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RunApp.Designer.cs">
+      <DependentUpon>RunApp.cs</DependentUpon>
+    </Compile>
     <Compile Include="SigmoidActivationFunction.cs" />
     <Compile Include="TrainerAnn.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ImageCategory.resx">
+      <DependentUpon>ImageCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunApp.resx">
+      <DependentUpon>RunApp.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
