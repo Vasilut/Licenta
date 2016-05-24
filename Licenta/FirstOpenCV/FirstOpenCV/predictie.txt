@@ -1,0 +1,8 @@
+minge
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic1.png 
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic2.png 
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic3.png 
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic4.png 
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic5.png 
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic6.png 
+C:\Users\Lucian\Documents\Visual Studio 2015\Projects\OpenCVHogDescriptor\pictures\pic7.png 
