@@ -48,167 +48,149 @@ int main(int argc, char* argv[])
 			{
 				strcpy(picturesPath, argv[i]);
 			}
-		cout << argv[i] << " " << '\n';
+		//cout << argv[i] << " " << '\n';
 	}
 	SvmHelper svmHelper;
 	initializeClase();
-	while (1)
+	//while (1)
+	//	{
+	char ch = inputUser[0];
+	//cout << ch << " ";
+	cout << "Alege o optiune:" << '\n';
+	cout << "1. Citeste fotografii si salveaza continutul lor in fisiere" << '\n';
+	cout << "2. Antreneaza reteaua" << '\n';
+	cout << "3. Predictie" << '\n';
+	cout << "4. Spune din ce categorie face parte o poza" << '\n';
+	cout << "5. Exit" << '\n';
+	//	cin >> ch;
+
+	if (ch == '1')
 	{
-		char ch; //= inputUser[0];
-		//cout << ch << " ";
-		cout << "Alege o optiune:" << '\n';
-		cout << "1. Citeste fotografii si salveaza continutul lor in fisiere" << '\n';
-		cout << "2. Antreneaza reteaua" << '\n';
-		cout << "3. Predictie" << '\n';
-		cout << "4. Spune din ce categorie face parte o poza" << '\n';
-		cout << "5. Exit" << '\n';
-		cin >> ch;
 
-		if (ch == '1')
+		ofstream out("fisier.out");
+		out << 180 << '\n';
+		char SaveHogPositiveFileName[dim] = "Mingi.xml";
+		char SaveHogNegativeFileName[dim] = "Bere.xml";
+		char SaveHogRateFileName[dim] = "Rate.xml";
+		char SaveHogDogsFileName[dim] = "Dogs.xml";
+		char SaveHogMotoFileName[dim] = "Moto.xml";
+
+		string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\bigdata\\pic";
+		string fisierSeparat = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\bigdata\\pic";
+
+		vector < vector < float > > descriereMingi;
+		vector < vector < float > > descriereBere;
+		vector < vector < float > > descriereRate;
+		vector < vector < float > > descreireDogs;
+		vector < vector < float > > descriereMoto;
+
+		for (int i = 0; i < 180; ++i)
 		{
-
-			ofstream out("fisier.out");
-			out << 40 << '\n';
-			char SaveHogPositiveFileName[dim] = "Mingi.xml";
-			char SaveHogNegativeFileName[dim] = "Bere.xml";
-			char SaveHogRateFileName[dim] = "Rate.xml";
-			char SaveHogDogsFileName[dim] = "Dogs.xml";
-			char SaveHogMotoFileName[dim] = "Moto.xml";
-			char SaveHogDubaiFileName[dim] = "Dubai.xml";
-
-			string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\pic";
-			string fisierSeparat = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\pic";
-
-			vector < vector < float > > descriereMingi;
-			vector < vector < float > > descriereBere;
-			vector < vector < float > > descriereRate;
-			vector < vector < float > > descreireDogs;
-			vector < vector < float > > descriereMoto;
-			vector < vector < float > > descriereDubai;
-
-			for (int i = 0; i < 40; ++i)
+			//citim cate o poza
+			fileN = fisierSeparat + std::to_string(i + 1) + ".png";
+			Mat img1 = imread(fileN);
+			if (img1.empty())
 			{
-				//citim cate o poza
-				fileN = fisierSeparat + std::to_string(i + 1) + ".png";
-				Mat img1 = imread(fileN);
-				if (img1.empty())
-				{
-					cout << " Citire incorecta ";
-					return 0;
-				}
-
-				Mat img1_gray;
-				cvtColor(img1, img1_gray, CV_RGB2GRAY);
-
-				Mat r_img1_gray;
-				resize(img1_gray, r_img1_gray, Size(64, 8));
-
-				HOGDescriptor d1(Size(64, 8), Size(8, 8), Size(4, 4), Size(4, 4), 9);
-				vector< float> descriptorsValues1;
-				vector< Point> locations1;
-
-				d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
-				for (int it = 0; it < descriptorsValues1.size(); ++it)
-				{
-					out << descriptorsValues1[it] << " ";
-				}
-				out << '\n';
-
-
-				if (i <= 6)
-				{
-					Pozeclasa["minge"].push_back(fileN);
-					descriereMingi.push_back(descriptorsValues1);
-				}
-				else
-					if (i > 6 && i <= 12)
-					{
-						Pozeclasa["bere"].push_back(fileN);
-						descriereBere.push_back(descriptorsValues1);
-					}
-					else
-						if (i >= 13 && i <= 18)
-						{
-							Pozeclasa["rate"].push_back(fileN);
-							descriereRate.push_back(descriptorsValues1);
-						}
-						else
-							if (i >= 19 && i <= 25)
-							{
-								Pozeclasa["caini"].push_back(fileN);
-								descreireDogs.push_back(descriptorsValues1);
-							}
-							else
-								if (i >= 26 && i <= 32)
-								{
-									Pozeclasa["moto"].push_back(fileN);
-									descriereMoto.push_back(descriptorsValues1);
-								}
-								else
-								{
-									Pozeclasa["dubai"].push_back(fileN);
-									descriereDubai.push_back(descriptorsValues1);
-								}
-
-				imshow("picture", img1_gray);
-				cvDestroyWindow("picture");
-				waitKey(0);
-				img1.release();
-				img1_gray.release();
-				r_img1_gray.release();
+				cout << " Citire incorecta ";
+				return 0;
 			}
 
-			writeToFile(SaveHogPositiveFileName, descriereMingi);
-			writeToFile(SaveHogNegativeFileName, descriereBere);
-			writeToFile(SaveHogRateFileName, descriereRate);
-			writeToFile(SaveHogDogsFileName, descreireDogs);
-			writeToFile(SaveHogMotoFileName, descriereMoto);
-			writeToFile(SaveHogDubaiFileName, descriereDubai);
-			writeClaseToFile(Pozeclasa);
+			Mat img1_gray;
+			cvtColor(img1, img1_gray, CV_RGB2GRAY);
 
+			Mat r_img1_gray;
+			resize(img1_gray, r_img1_gray, Size(64, 8));
+
+			HOGDescriptor d1(Size(64, 8), Size(8, 8), Size(4, 4), Size(4, 4), 9);
+			vector< float> descriptorsValues1;
+			vector< Point> locations1;
+
+			d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
+			for (int it = 0; it < descriptorsValues1.size(); ++it)
+			{
+				out << descriptorsValues1[it] << " ";
+			}
+			out << '\n';
+
+			if (i <= 35)
+			{
+				Pozeclasa["minge"].push_back(fileN);
+				descriereMingi.push_back(descriptorsValues1);
+			}
+			else
+				if (i >= 36 && i <= 71)
+				{
+					Pozeclasa["bere"].push_back(fileN);
+					descriereBere.push_back(descriptorsValues1);
+				}
+				else
+					if (i >= 72 && i <= 107)
+					{
+						Pozeclasa["rate"].push_back(fileN);
+						descriereRate.push_back(descriptorsValues1);
+					}
+					else
+						if (i >= 108 && i <= 143)
+						{
+							Pozeclasa["caini"].push_back(fileN);
+							descreireDogs.push_back(descriptorsValues1);
+						}
+						else
+							if (i >= 144 && i <= 179)
+							{
+								Pozeclasa["moto"].push_back(fileN);
+								descriereMoto.push_back(descriptorsValues1);
+							}
+
+			imshow("picture", img1_gray);
+			cvDestroyWindow("picture");
+			waitKey(0);
+			img1.release();
+			img1_gray.release();
+			r_img1_gray.release();
+		}
+
+		writeToFile(SaveHogPositiveFileName, descriereMingi);
+		writeToFile(SaveHogNegativeFileName, descriereBere);
+		writeToFile(SaveHogRateFileName, descriereRate);
+		writeToFile(SaveHogDogsFileName, descreireDogs);
+		writeToFile(SaveHogMotoFileName, descriereMoto);
+		writeClaseToFile(Pozeclasa);
+
+		cout << "Operation completed" << '\n';
+		cin.get();
+	}
+	else
+		if (ch == '2')
+		{
+			svmHelper.trainingSVM();
 			cout << "Operation completed" << '\n';
 			cin.get();
 		}
 		else
-			if (ch == '2')
+			if (ch == '3')
 			{
-				svmHelper.trainingSVM();
+				svmHelper.predictPhoto();
 				cout << "Operation completed" << '\n';
 				cin.get();
 			}
 			else
-				if (ch == '3')
+				if (ch == '4')
 				{
-					svmHelper.predictPhoto();
-					cout << "Operation completed" << '\n';
-					cin.get();
+
+					string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\";
+					string fis = /*fileN + "pic10.png";*/  fileN + string(picturesPath);
+
+					cout << fis << '\n';
+					predictAnImage(fis);
 				}
 				else
-					if (ch == '4')
-					{
-						string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\";
-						string fis = fileN + "pic9.png"; //fileN + string(picturesPath);
-
-						/*string plm = "\\";
-						string to = "\\\\";
-						int st = 0;
-						while ((st = fis.find(plm, st)) != std::string::npos)
-						{
-							fis.replace(st, plm.length(), to);
-							st += to.length();
-						}*/
-						//fis.replace(fis.find(plm), plm.length(), "\\\\");
-
-						cout << fis << '\n';
-						predictAnImage(fis);
-					}
-					else
-					{
-						//cout << "Comanda eronata" << ch << '\n';
-						//cin.get();
-						break;
-					}
-	}
+				{
+					cout << "Comanda eronata" << ch << '\n';
+					cin.get();
+					//break;
+				}
+	//}
 	return 0;
 }
 
@@ -302,14 +284,14 @@ void showAllPicturesFromACategory(string category)
 	{
 		string imgPath = foldersPath[i];
 		g << imgPath << '\n';
-		Mat img1 = imread(imgPath);
+		/*Mat img1 = imread(imgPath);
 		if (img1.empty())
 		{
 			cout << " Citire incorecta";
 			return;
 		}
 		imshow("picture", img1);
-		waitKey(0);
+		waitKey(0);*/
 	}
 }
 
@@ -325,7 +307,7 @@ void writeClaseToFile(map<string, vector<string> > files)
 		vector < string > objectsFromCurrentClass = myPair.second;
 		for (vector < string >::iterator it = objectsFromCurrentClass.begin(); it != objectsFromCurrentClass.end(); ++it)
 		{
-			fout << *it << " " <<'\n';
+			fout << *it << " " << '\n';
 		}
 	}
 
@@ -338,7 +320,6 @@ void initializeClase()
 	clasa[2] = "rate";
 	clasa[3] = "caini";
 	clasa[4] = "moto";
-	clasa[5] = "dubai";
 
 }
 

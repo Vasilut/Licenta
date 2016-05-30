@@ -4,6 +4,7 @@
 #include "opencv2/nonfree/nonfree.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <iostream>
+#include <fstream>
 #include "opencv2\gpu\gpu.hpp"
 #include <opencv2\gpu\gpu.hpp>
 
@@ -23,16 +24,15 @@ public:
 		FileStorage read_RateXml("Rate.xml", FileStorage::READ);
 		FileStorage read_DogsXml("Dogs.xml", FileStorage::READ);
 		FileStorage read_MotoXml("Moto.xml", FileStorage::READ);
-		FileStorage read_DubaiXml("Dubai.xml", FileStorage::READ);
-
-		//Positive Mat
+		
+		//balls Mat
 		Mat pMat;
 		read_PositiveXml["Descriptor_of_images"] >> pMat;
 		//Read Row, Cols
 		int pRow, pCol;
 		pRow = pMat.rows; pCol = pMat.cols;
 
-		//Negative Mat
+		//beer Mat
 		Mat nMat;
 		read_NegativeXml["Descriptor_of_images"] >> nMat;
 		//Read Row, Cols
@@ -63,17 +63,10 @@ public:
 		mRow = mMat.rows;
 		mCol = mMat.cols;
 
-		//Dubai Mat
-		Mat dubMat;
-		read_MotoXml["Descriptor_of_images"] >> dubMat;
-		int dubRow, dubCol;
-		dubRow = dubMat.rows;
-		dubCol = dubMat.cols;
-
-
+		
 		//Rows, Cols printf
-		printf("   pRow=%d pCol=%d, nRow=%d nCol=%d rRow=%d rCol=%d dRow=%d dCol=%d mRow=%d mCol=%d dubRow=%d dubCol=%d\n",
-			pRow, pCol, nRow, nCol, rRow, rCol, dRow, dCol, mRow, mCol, dubRow, dubCol);
+		//printf("   pRow=%d pCol=%d, nRow=%d nCol=%d rRow=%d rCol=%d dRow=%d dCol=%d mRow=%d mCol=%d\n",
+			//pRow, pCol, nRow, nCol, rRow, rCol, dRow, dCol, mRow, mCol);
 		//release
 		read_PositiveXml.release();
 		//release
@@ -88,16 +81,13 @@ public:
 		//release
 		read_MotoXml.release();
 		/////////////////////////////////////////////////////////////////////////////////
-		//release
-		read_DubaiXml.release();
-		/////////////////////////////////////////////////////////////////////////////////
-
+		
 		//Make training data for SVM
 		/////////////////////////////////////////////////////////////////////////////////
 		printf("2. Make training data for SVM\n");
 		//descriptor data set
 		//mingi
-		Mat PN_Descriptor_mtx(pRow + nRow + rRow + dRow + mRow + dubRow, pCol, CV_32FC1); //in here pCol and nCol is descriptor number, so two value must be same;
+		Mat PN_Descriptor_mtx(pRow + nRow + rRow + dRow + mRow, pCol, CV_32FC1); //in here pCol and nCol is descriptor number, so two value must be same;
 		memcpy(PN_Descriptor_mtx.data, pMat.data, sizeof(float) * pMat.cols * pMat.rows);
 		//bere
 		int startP = sizeof(float) * pMat.cols * pMat.rows;
@@ -111,19 +101,16 @@ public:
 		//moto
 		int startM = sizeof(float) * dMat.cols * dMat.rows + startR;
 		memcpy(&(PN_Descriptor_mtx.data[startM]), mMat.data, sizeof(float) * mMat.cols * mMat.rows);
-		//dubai
-		int startDub = sizeof(float) * mMat.cols * mMat.rows + startM;
-		memcpy(&(PN_Descriptor_mtx.data[startDub]), dubMat.data, sizeof(float) * dubMat.cols * dubMat.rows);
-
+		
 		//data labeling
-		Mat labels(pRow + nRow + rRow + dRow + mRow + dubRow, 1, CV_32FC1, Scalar(-1.0));
+		Mat labels(pRow + nRow + rRow + dRow + mRow, 1, CV_32FC1, Scalar(-1.0));
 		labels.rowRange(0, pRow) = Scalar(1.0);
 		labels.rowRange(pRow + nRow, pRow + nRow + rRow) = Scalar(2.0);
 		labels.rowRange(pRow + nRow + rRow, pRow + nRow + rRow + dRow) = Scalar(3.0);
-		labels.rowRange(pRow + nRow + rRow + dRow, pRow + nRow + rRow + dRow + mRow) = Scalar(4.0);
-		labels.rowRange(pRow + nRow + rRow + dRow + mRow, pRow + nRow + rRow + dRow + mRow + dubRow) = Scalar(5.0);
-		for (int i = 0; i < pRow + nRow + rRow + dRow + mRow + dubRow; ++i)
-			cout << labels.at<float>(i, 0) << '\n';
+		labels.rowRange(pRow + nRow + rRow + dRow, pRow + nRow + rRow + dRow + mRow) = Scalar(4.0);/*
+		labels.rowRange(pRow + nRow + rRow + dRow + mRow, pRow + nRow + rRow + dRow + mRow + dubRow) = Scalar(5.0);*/
+		//for (int i = 0; i < pRow + nRow + rRow + dRow + mRow; ++i)
+			//cout << labels.at<float>(i, 0) << '\n';
 		/////////////////////////////////////////////////////////////////////////////////
 
 		//Set svm parameter
@@ -133,7 +120,7 @@ public:
 		CvSVMParams params;
 		params.svm_type = CvSVM::C_SVC;
 		params.kernel_type = CvSVM::LINEAR;
-		params.term_crit = cvTermCriteria(CV_TERMCRIT_ITER, 1000000, 1e-6);
+		params.term_crit = cvTermCriteria(CV_TERMCRIT_ITER, 100000, 1e-6);
 		/////////////////////////////////////////////////////////////////////////////////
 
 		//Training
@@ -148,14 +135,16 @@ public:
 
 	void predictPhoto()
 	{
+		ofstream out("datetest.out");
 		CvSVM svm;
 		svm.load("trainedSVM.xml");
 
 		string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\pic";
 		string fisierSeparat = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\pic";
 
-		int poz = 0, neg = 0, rate = 0, dogs = 0, moto = 0, dubai = 0;
-		for (int i = 0; i < 17; ++i)
+		out << 16 << '\n';
+		int poz = 0, neg = 0, rate = 0, dogs = 0, moto = 0;
+		for (int i = 0; i < 16; ++i)
 		{
 			//citim cate o poza
 			fileN = fisierSeparat + std::to_string(i + 1) + ".png";
@@ -178,6 +167,11 @@ public:
 
 			d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
 			Mat fm = Mat(descriptorsValues1);
+			for (int it = 0; it < descriptorsValues1.size(); ++it)
+			{
+				out << descriptorsValues1[it] << " ";
+			}
+			out << '\n';
 
 			//Classification whether data is positive or negative
 			int result = svm.predict(fm);
@@ -197,22 +191,18 @@ public:
 					++rate;
 				}
 				else
-					if (result == 3)
-					{
+				if (result == 3)
+				{
 						//dogs
 						++dogs;
-					}
-					else
-						if (result == 4)
-						{
-							//moto
-							++moto;
-						}
-						else
-						{
-							//dubai
-							++dubai;
-						}
+				}
+				else
+				if (result == 4)
+				{
+						//moto
+						++moto;
+				}
+						
 			//cout << fileN << " " << result << '\n';
 
 			imshow("picture", img1_gray);
@@ -220,7 +210,7 @@ public:
 			waitKey(0);
 		}
 
-		cout << " Mingi: " << poz << " Bere: " << neg << " Rate: " << rate << " Dogs: " << dogs << " " << " Moto: " << moto << " Dubai: " << dubai << '\n';
+		cout << " Mingi: " << poz << " Bere: " << neg << " Rate: " << rate << " Dogs: " << dogs << " " << " Moto: " << moto << '\n';
 		cin.get();
 	}
 };

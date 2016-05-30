@@ -1,5 +1,8 @@
-﻿  Source.cpp
-c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\svmhelper.h(183): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\source.cpp(277): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\source.cpp(358): warning C4101: 'numberOfPictures': unreferenced local variable
+﻿  SvmHelper.h
+c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\svmhelper.h(177): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Source.cpp
+c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\svmhelper.h(177): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\source.cpp(259): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\lucian\documents\visual studio 2015\projects\firstopencv\firstopencv\source.cpp(339): warning C4101: 'numberOfPictures': unreferenced local variable
+  Generating Code...
   FirstOpenCV.vcxproj -> C:\Users\Lucian\Documents\Visual Studio 2015\Projects\FirstOpenCV\x64\Debug\FirstOpenCV.exe
