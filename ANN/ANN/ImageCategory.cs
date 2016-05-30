@@ -12,8 +12,6 @@ namespace ANN
 {
     public partial class ImageCategory : Form
     {
-        private string v;
-
         public ImageCategory(string word, List<string> predictii)
         {
             InitializeComponent();

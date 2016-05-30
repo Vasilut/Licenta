@@ -9,11 +9,10 @@ namespace ANN
 {
     public class ReadFile
     {
-        public List<Tuple<List<double>, double>> GetTextContains()
+        public List<Tuple<List<double>, double>> GetTrainingData()
         {
             var listLines = new List<Tuple<List<double>, double>>();
 
-            //var fileStream = new FileStream(@"C:\Users\Lucian\Documents\Visual Studio 2015\Projects\FirstOpenCV\FirstOpenCV\fisier.out", FileMode.Open, FileAccess.Read);
             var fileStream = new FileStream("fisier.out", FileMode.Open, FileAccess.Read);
             using (var stream = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -39,7 +38,7 @@ namespace ANN
                             }
 
                         }
-                        if (i <= 40)
+                        if (i <= 108) // normal e <=180, pt 5 clase
                         {
                             listLines.Add(new Tuple<List<double>, double>(listNumbers, multime));
                         }
@@ -54,25 +53,22 @@ namespace ANN
 
         private double GetMultime(int x)
         {
-            if (x >= 1 && x <= 7)
+            if (x >= 1 && x <= 36)
                 return 0.0;
             else
-            if (x >= 8 && x <= 13)
+            if (x >= 37 && x <= 72)
                 return 1.0;
             else
-            if (x >= 14 && x <= 19)
+            if (x >= 73 && x <= 108)
                 return 2.0;
             else
-            if (x >= 20 && x <= 26)
+            if (x >= 109 && x <= 144)
                 return 3.0;
             else
-            if (x >= 27 && x <= 33)
                 return 4.0;
-            else
-                return 5.0;
         }
 
-        public static List<string> ReadResult()
+        public static List<string> ReadListaPozeAsociate()
         {
 
             List<string> predictii = new List<string>();
@@ -92,6 +88,73 @@ namespace ANN
             }
 
             return predictii;
+        }
+
+        public List<Tuple<List<double>, double>> GetTestData()
+        {
+            var listLines = new List<Tuple<List<double>, double>>();
+
+            var fileStream = new FileStream("datetest.out", FileMode.Open, FileAccess.Read);
+            using (var stream = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                int i = 0;
+                string line;
+                while ((line = stream.ReadLine()) != null)
+                {
+                    if (i > 0)
+                    {
+                        List<double> listNumbers = new List<double>();
+                        double multime = GetMultimeTest(i);
+                        string[] numbers = line.Split(' ');
+                        for (int j = 0; j < numbers.Length; ++j)
+                        {
+                            string nr = numbers[j];
+                            if (nr != "")
+                            {
+                                double rezult;
+                                if (double.TryParse(nr, out rezult) == true)
+                                {
+                                    listNumbers.Add(rezult);
+                                }
+                            }
+
+                        }
+                        if (i <= 12) // normal e <=16, pentru toate clasele
+                        {
+                            listLines.Add(new Tuple<List<double>, double>(listNumbers, multime));
+                        }
+                    }
+                    i++;
+                    //listLines.Add(line);
+                }
+            }
+
+            return listLines;
+        }
+
+        private double GetMultimeTest(int x)
+        {
+            if (x >= 1 && x <= 4)
+            {
+                return 2.0;
+            }
+            else
+            if (x >= 5 && x <= 8)
+            {
+                return 0.0;
+            }
+            else
+            if (x >= 9 && x <= 12)
+            {
+                return 1.0;
+            }
+            else
+            if (x >= 13 && x <= 14)
+            {
+                return 3.0;
+            }
+            else
+                return 4.0;
         }
     }
 }

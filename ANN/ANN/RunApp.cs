@@ -43,11 +43,15 @@ namespace ANN
                 string fileName = Path.GetFileName(fileDialog.FileName);
                 string parameter = "4 " + fileName;
                 ProcesInitiator.InitProcess(parameter);
-                var listaPredictii = ReadFile.ReadResult();
+                var listaPredictii = ReadFile.ReadListaPozeAsociate();
                 new ImageCategory(listaPredictii[0], listaPredictii).Show();
+                new ImageSlideShow(listaPredictii[0], listaPredictii).Show();
             }
         }
 
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
 }
