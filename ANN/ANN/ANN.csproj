@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageNetwork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageNetwork.Designer.cs">
+      <DependentUpon>ImageNetwork.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageSlideShow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,7 @@
     <Compile Include="RunApp.Designer.cs">
       <DependentUpon>RunApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Serializer.cs" />
     <Compile Include="SigmoidActivationFunction.cs" />
     <Compile Include="TrainerAnn.cs" />
     <Compile Include="Utility.cs" />
@@ -76,6 +83,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ImageNetwork.resx">
+      <DependentUpon>ImageNetwork.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImageSlideShow.resx">
       <DependentUpon>ImageSlideShow.cs</DependentUpon>
     </EmbeddedResource>

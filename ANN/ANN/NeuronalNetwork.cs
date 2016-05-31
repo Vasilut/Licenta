@@ -4,6 +4,7 @@ using System.IO;
 
 namespace ANN
 {
+    [Serializable]
     public class NeuronalNetwork
     {
         private int _inputNeuron;
@@ -18,7 +19,7 @@ namespace ANN
         private double[] _hidden;
         private double[] _outputs;
 
-        private double _learningRate = 0.1;
+        private double _learningRate = 0.2;
         private Random _generatorRand = new Random();
 
 
@@ -81,7 +82,7 @@ namespace ANN
                 for (int j = 0; j < _hiddenNeuron; ++j)
                 {
                     //the values are between -2 2
-                    _inputToHiddenWeight[i, j] = (_generatorRand.NextDouble() * 4) - 2;
+                    _inputToHiddenWeight[i, j] = 0.01 + ((double)_generatorRand.Next(0, 2) / 100);
                 }
             }
 
@@ -90,7 +91,7 @@ namespace ANN
             {
                 for (int j = 0; j < _outputNeuron; ++j)
                 {
-                    _hiddenToOutputWeight[i, j] = (_generatorRand.NextDouble() * 4) - 2;
+                    _hiddenToOutputWeight[i, j] = 0.01 + ((double)_generatorRand.Next(0, 2) / 100);
                 }
             }
         }
@@ -127,7 +128,7 @@ namespace ANN
                 _outputs[i] = SigmoidActivationFunction.processValue(sum);
             }
             
-            Console.WriteLine(_outputs[0] + " " + _outputs[1] + " " + _outputs[2] + " " +/* _outputs[3] + " " + _outputs[4] + " "  +*/ " Target " + " " + target + " Epoca" + epoca );
+            Console.WriteLine(_outputs[0] + " " + _outputs[1] + " " + _outputs[2] + " " + _outputs[3] + " " + /* + _outputs[4] + " "  +*/ " Target " + " " + target + " Epoca" + epoca );
         }
 
         public int InputNeuron { get { return _inputNeuron; } set { _inputNeuron = value; } }

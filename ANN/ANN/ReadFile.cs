@@ -38,13 +38,43 @@ namespace ANN
                             }
 
                         }
-                        if (i <= 108) // normal e <=180, pt 5 clase
+                        if (i <= 144) // normal e <=180, pt 5 clase
                         {
                             listLines.Add(new Tuple<List<double>, double>(listNumbers, multime));
                         }
                     }
                     i++;
                     //listLines.Add(line);
+                }
+            }
+
+            return listLines;
+        }
+
+        public List<double> GetPictureForAnn()
+        {
+            var listLines = new List<double>();
+
+            var fileStream = new FileStream("annfeature.out", FileMode.Open, FileAccess.Read);
+            using (var stream = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = stream.ReadLine()) != null)
+                {
+                    string[] numbers = line.Split(' ');
+                    for (int j = 0; j < numbers.Length; ++j)
+                    {
+                        string nr = numbers[j];
+                        if (nr != "")
+                        {
+                            double rezult;
+                            if (double.TryParse(nr, out rezult) == true)
+                            {
+                                listLines.Add(rezult);
+                            }
+                        }
+
+                    }
                 }
             }
 
@@ -79,7 +109,7 @@ namespace ANN
                 string line;
                 while ((line = stream.ReadLine()) != null)
                 {
-                    if(line == "")
+                    if (line == "")
                     {
                         break;
                     }
@@ -119,7 +149,7 @@ namespace ANN
                             }
 
                         }
-                        if (i <= 12) // normal e <=16, pentru toate clasele
+                        if (i <= 14) // normal e <=16, pentru toate clasele
                         {
                             listLines.Add(new Tuple<List<double>, double>(listNumbers, multime));
                         }

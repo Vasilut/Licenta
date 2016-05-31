@@ -51,7 +51,8 @@ namespace ANN
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
+            //training with ann, recognition with ann, 
+            new ImageNetwork().Show();
         }
     }
 }

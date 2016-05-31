@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace ANN
@@ -11,20 +12,22 @@ namespace ANN
         static void Main(string[] args)
         {
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new RunApp());
-            // ProcesInitiator.InitProcess();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new RunApp());
+            //ProcesInitiator.InitProcess();
 
-            ReadFile rd = new ReadFile();
-            NeuronalNetwork neuronalNetwork = new NeuronalNetwork(540, 15, 3);
-            TrainerAnn trainerAnn = new TrainerAnn(ref neuronalNetwork, rd);
-            trainerAnn.DoTrain(5000);
-            Console.WriteLine("Antrenare completa");
+            //ReadFile rd = new ReadFile();
+            //NeuronalNetwork neuronalNetwork = new NeuronalNetwork(540, 10, 4);
+            //TrainerAnn trainerAnn = new TrainerAnn(ref neuronalNetwork, rd, false);
+            //trainerAnn.DoTrain(5000);
+            //Console.WriteLine("Antrenare completa");
 
-            trainerAnn.TestRun(3000);
-            Console.WriteLine("Press any key to continue");
-            Console.ReadLine();
+            //NeuronalNetwork nr = Serializer.LoadNetwork("serializat.net");
+            //TrainerAnn trainerAnn = new TrainerAnn(ref nr, rd, true);
+            //trainerAnn.TestRun(3000);
+            //Console.WriteLine("Press any key to continue");
+            //Console.ReadLine();
         }
     }
 }

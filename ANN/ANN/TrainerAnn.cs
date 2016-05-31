@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ANN
 {
@@ -12,10 +13,13 @@ namespace ANN
         private List<Tuple<List<double>, double>> _trainSet = new List<Tuple<List<double>, double>>();
         private List<Tuple<List<double>, double>> _testData = new List<Tuple<List<double>, double>>();
 
-        public TrainerAnn(ref NeuronalNetwork neuronalNetwork, ReadFile rf)
+        public TrainerAnn(ref NeuronalNetwork neuronalNetwork, ReadFile rf, bool serialize)
         {
             _neuronalNetwork = neuronalNetwork;
-            _neuronalNetwork.InitializeNetwork();
+            if (serialize == false)
+            {
+                _neuronalNetwork.InitializeNetwork();
+            }
             _trainSet = rf.GetTrainingData();
             _testData = rf.GetTestData();
             File.WriteAllText("pua.txt", string.Empty);
@@ -43,7 +47,7 @@ namespace ANN
         public void TestRun(int trainingTimes)
         {
             _trainingTimes = trainingTimes;
-            
+
             //for each picture we'll take out from the dataset, we'll train the network without this data set
             //and then we'll verify with this input
             for (int indicePoze = 0; indicePoze < _testData.Count; ++indicePoze)
@@ -78,7 +82,7 @@ namespace ANN
                 {
                     wr.WriteLine(_neuronalNetwork.Outputs[0] + " " + _neuronalNetwork.Outputs[1] + " " +
                                 _neuronalNetwork.Outputs[2]
-                                /*+ _neuronalNetwork.Outputs[3] + " " + _neuronalNetwork.Outputs[4]*/ 
+                                + " " + _neuronalNetwork.Outputs[3] + " "/* + _neuronalNetwork.Outputs[4]*/
                                 + " " + " Target " + " " + (_testData[indicePoze].Item2)
                                 + " Maximul: " + maxx + " Poz Maxima : " + pozMax)
                                 ;
@@ -86,6 +90,17 @@ namespace ANN
                 }
             }
 
+        }
+
+        public int ForwardPropagation(List<double> values)
+        {
+
+            _neuronalNetwork.Forward(values, 0, 0);
+
+            Tuple<double, int> rezultMax = Utility.GetMaxim(_neuronalNetwork.Outputs, _neuronalNetwork.OutputNeuron);
+            int pozMax = rezultMax.Item2;
+            double maxx = rezultMax.Item1;
+            return pozMax;
         }
 
         private void BackPropagation(double multime)
@@ -97,8 +112,13 @@ namespace ANN
             // Get the delta value for the output layer
             for (int i = 0; i < _neuronalNetwork.OutputNeuron; ++i)
             {
+                double target = 0.0;
+                if (i == multime)
+                {
+                    target = 1.0;
+                }
                 delta_outputs[i] =
-                    _neuronalNetwork.Outputs[i] * (1.0 - _neuronalNetwork.Outputs[i]) * (multime - _neuronalNetwork.Outputs[i]);
+                    _neuronalNetwork.Outputs[i] * (1.0 - _neuronalNetwork.Outputs[i]) * (target - _neuronalNetwork.Outputs[i]);
             }
 
             // Get the delta value for the hidden layer
