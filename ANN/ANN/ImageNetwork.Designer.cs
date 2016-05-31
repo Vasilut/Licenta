@@ -43,6 +43,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -192,11 +193,22 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "The image is:";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(677, 309);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(94, 23);
+            this.button7.TabIndex = 12;
+            this.button7.Text = "ShowTestGrafic";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // ImageNetwork
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 369);
+            this.ClientSize = new System.Drawing.Size(794, 369);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label2);
@@ -238,5 +250,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button7;
     }
 }

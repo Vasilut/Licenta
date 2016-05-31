@@ -12,6 +12,13 @@ namespace ANN
         private int _trainingTimes = 10000;
         private List<Tuple<List<double>, double>> _trainSet = new List<Tuple<List<double>, double>>();
         private List<Tuple<List<double>, double>> _testData = new List<Tuple<List<double>, double>>();
+        private Dictionary<double, List<int>> _dict = new Dictionary<double, List<int>>()
+        {
+            [0] = new List<int>(),
+            [1] = new List<int>(),
+            [2] = new List<int>(),
+            [3] = new List<int>()
+        };
 
         public TrainerAnn(ref NeuronalNetwork neuronalNetwork, ReadFile rf, bool serialize)
         {
@@ -44,10 +51,22 @@ namespace ANN
             }
         }
 
+        public Dictionary<double, List<int>> DictionaryTestData
+        {
+            get
+            {
+                return _dict;
+            }
+            set
+            {
+                _dict = value;
+            }
+        }
+
         public void TestRun(int trainingTimes)
         {
             _trainingTimes = trainingTimes;
-
+           
             //for each picture we'll take out from the dataset, we'll train the network without this data set
             //and then we'll verify with this input
             for (int indicePoze = 0; indicePoze < _testData.Count; ++indicePoze)
@@ -78,6 +97,7 @@ namespace ANN
                 int pozMax = rezultMax.Item2;
                 double maxx = rezultMax.Item1;
 
+                _dict[_testData[indicePoze].Item2].Add(pozMax);
                 using (var wr = new StreamWriter("pua.txt", true))
                 {
                     wr.WriteLine(_neuronalNetwork.Outputs[0] + " " + _neuronalNetwork.Outputs[1] + " " +
@@ -89,6 +109,7 @@ namespace ANN
                     wr.WriteLine("---------------------------");
                 }
             }
+
 
         }
 

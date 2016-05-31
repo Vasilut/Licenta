@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraficTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraficTest.Designer.cs">
+      <DependentUpon>GraficTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageNetwork.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +90,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GraficTest.resx">
+      <DependentUpon>GraficTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImageNetwork.resx">
       <DependentUpon>ImageNetwork.cs</DependentUpon>
     </EmbeddedResource>

@@ -130,5 +130,13 @@ namespace ANN
         {
 
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            _trainAnn.TestRun(1);
+            Dictionary<double,List<int> > obj = _trainAnn.DictionaryTestData;
+            
+            new GraficTest(obj).Show();
+        }
     }
 }
