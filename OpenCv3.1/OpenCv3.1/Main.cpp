@@ -584,10 +584,10 @@ void predict()
 
 		d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
 		Mat fm = Mat(descriptorsValues1);
-		Mat res;
+		fm = fm.reshape(1,1);
 
 		//Classification whether data is positive or negative
-		int result = svm->predict(fm,res);
+		int result = svm->predict(fm);
 		if (result == 1)
 		{//minge
 			++poz;
