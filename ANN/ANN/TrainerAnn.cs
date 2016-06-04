@@ -27,6 +27,7 @@ namespace ANN
             {
                 _neuronalNetwork.InitializeNetwork();
             }
+            //initializa training data
             _trainSet = rf.GetTrainingData();
             _testData = rf.GetTestData();
             File.WriteAllText("pua.txt", string.Empty);
@@ -65,8 +66,9 @@ namespace ANN
 
         public void TestRun(int trainingTimes)
         {
+            //run the forward propagation for test data
+
             _trainingTimes = trainingTimes;
-           
             //for each picture we'll take out from the dataset, we'll train the network without this data set
             //and then we'll verify with this input
             for (int indicePoze = 0; indicePoze < _testData.Count; ++indicePoze)
@@ -115,7 +117,7 @@ namespace ANN
 
         public int ForwardPropagation(List<double> values)
         {
-
+            //forward propagation just for a set of values
             _neuronalNetwork.Forward(values, 0, 0);
 
             Tuple<double, int> rezultMax = Utility.GetMaxim(_neuronalNetwork.Outputs, _neuronalNetwork.OutputNeuron);

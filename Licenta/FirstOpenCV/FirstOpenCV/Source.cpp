@@ -33,6 +33,7 @@ void showAllPicturesFromACategory(string category);
 void writeClaseToFile(map < string, vector < string > > files);
 void initializeClase();
 void readAllClasses();
+void extractFeaturesFromPicture(string fileName);
 int main(int argc, char* argv[])
 {
 	char picturesPath[dim];
@@ -61,7 +62,8 @@ int main(int argc, char* argv[])
 	cout << "2. Antreneaza reteaua" << '\n';
 	cout << "3. Predictie" << '\n';
 	cout << "4. Spune din ce categorie face parte o poza" << '\n';
-	cout << "5. Exit" << '\n';
+	cout << "5. Extrage caracteristicile pentru o poza" << '\n';
+	cout << "6. Exit" << '\n';
 	//	cin >> ch;
 
 	if (ch == '1')
@@ -184,6 +186,15 @@ int main(int argc, char* argv[])
 					cout << fis << '\n';
 					predictAnImage(fis);
 				}
+				else
+					if (ch == '5')
+					{
+						string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\";
+						string fis = /*fileN + "pic10.png";*/  fileN + string(picturesPath);
+
+						cout << fis << '\n';
+						extractFeaturesFromPicture(fis);
+					}
 				else
 				{
 					cout << "Comanda eronata" << ch << '\n';
@@ -349,4 +360,39 @@ void readAllClasses()
 		}
 		Pozeclasa[nameOfClass] = name;
 	}
+}
+
+void extractFeaturesFromPicture(string fileName)
+{
+	ofstream out("annfeature.out");
+
+	Mat img1 = imread(fileName);
+	if (img1.empty())
+	{
+		cout << " Citire incorecta ";
+		return;
+	}
+
+	Mat img1_gray;
+	cvtColor(img1, img1_gray, CV_RGB2GRAY);
+
+	Mat r_img1_gray;
+	resize(img1_gray, r_img1_gray, Size(64, 8));
+
+	HOGDescriptor d1(Size(64, 8), Size(8, 8), Size(4, 4), Size(4, 4), 9);
+	vector< float> descriptorsValues1;
+	vector< Point> locations1;
+
+	d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
+	for (int it = 0; it < descriptorsValues1.size(); ++it)
+	{
+		out << descriptorsValues1[it] << " ";
+	}
+
+	imshow("picture", img1_gray);
+	cvDestroyWindow("picture");
+	waitKey(0);
+	img1.release();
+	img1_gray.release();
+	r_img1_gray.release();
 }

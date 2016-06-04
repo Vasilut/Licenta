@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 
 namespace ANN
 {
-    public class ProcesInitiator
+    sealed class ProcesInitiator
     {
-        public static void InitProcess(string arguments)
+        //singleton, we need a single instance for ProcesInitiator
+        private static readonly ProcesInitiator _procesInitiator = new ProcesInitiator();
+
+        public static ProcesInitiator GetProcesInitiator()
+        {
+            return _procesInitiator;
+        }
+
+        public void InitProcess(string arguments)
         {
             var proc = new Process();
 

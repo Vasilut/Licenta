@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ANN.NeuronalNetwork">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAACAAAQAAIQEgIAAAAhAAAEEACAAIAAAAAAACYEACI=</HashCode>
+      <FileName>NeuronalNetwork.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.ProcesInitiator">
+    <Position X="6.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAgAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProcesInitiator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.ReadFile">
+    <Position X="8" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAACAAAAEAAQAACEAAAA=</HashCode>
+      <FileName>ReadFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.Serializer">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.SigmoidActivationFunction">
+    <Position X="6.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>SigmoidActivationFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.TrainerAnn">
+    <Position X="2.25" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>KBAAAAYAAAAAAAAAAAAAAAEAAEAABAACAAAAAAAACAA=</HashCode>
+      <FileName>TrainerAnn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.Utility">
+    <Position X="4.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANN.Program">
+    <Position X="9.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

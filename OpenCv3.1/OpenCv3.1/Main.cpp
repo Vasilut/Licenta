@@ -444,9 +444,7 @@ void svmTraining()
 	/////////////////////////////////////////////////////////////////////////////////
 
 	int sz = pRow + nRow + rRow + dRow + mRow;
-	int labels2[4] = { 1, -1, -1, -1 };
 	Mat labelsMat(180, 1, CV_32SC1, laba);
-	float trainingData[4][2] = { { 501, 10 },{ 255, 10 },{ 501, 255 },{ 10, 501 } };
 	Mat trainingDataMat(180, 3780, CV_32FC1, matrix);
 	svm->train(trainingDataMat, ROW_SAMPLE, labelsMat);
 	//svm.train(PN_Descriptor_mtx, labels, Mat(), Mat(), params);
@@ -456,76 +454,6 @@ void svmTraining()
 	printf("5. SVM xml save\n");
 	svm->save("trainedSVM.xml");
 
-	//predictieeeeeeeeeeeeeee
-	/*string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\pic";
-	string fisierSeparat = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\pic";
-
-	int poz = 0, neg = 0, rate = 0, dogs = 0, moto = 0;
-	for (int i = 0; i < 16; ++i)
-	{
-		//citim cate o poza
-		fileN = fisierSeparat + std::to_string(i + 1) + ".png";
-
-		Mat img1 = imread(fileN);
-		if (img1.empty())
-		{
-			cout << " Citire incorecta";
-			return;
-		}
-		Mat img1_gray;
-		cvtColor(img1, img1_gray, CV_RGB2GRAY);
-
-		Mat r_img1_gray;
-		//resize(img1_gray, r_img1_gray, Size(64, 8));
-		resize(img1_gray, r_img1_gray, Size(64, 128));
-
-		//HOGDescriptor d1(Size(64, 8), Size(8, 8), Size(4, 4), Size(4, 4), 9);
-		HOGDescriptor d1(Size(64, 128), Size(16, 16), Size(8, 8), Size(8, 8), 9);
-		vector< float> descriptorsValues1;
-		vector< Point> locations1;
-
-		d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
-		Mat fm = Mat(descriptorsValues1);
-
-		//Classification whether data is positive or negative
-		int result = svm->predict(fm);
-		if (result == 1)
-		{//minge
-			++poz;
-		}
-		else if (result == -1)
-		{
-			//bere
-			++neg;
-		}
-		else
-			if (result == 2)
-			{
-				//rate
-				++rate;
-			}
-			else
-				if (result == 3)
-				{
-					//dogs
-					++dogs;
-				}
-				else
-					if (result == 4)
-					{
-						//moto
-						++moto;
-					}
-		//cout << fileN << " " << result << '\n';
-
-		imshow("picture", img1_gray);
-		cvDestroyWindow("picture");
-		waitKey(0);
-	}
-
-	cout << " Mingi: " << poz << " Bere: " << neg << " Rate: " << rate << " Dogs: " << dogs << " " << " Moto: " << moto << '\n';
-	cin.get();
-	*/
 }
 
 vector < vector < float > > Mat2DToArray(int row, int col, Mat M2)
@@ -549,7 +477,7 @@ vector < vector < float > > Mat2DToArray(int row, int col, Mat M2)
 void predict()
 {
 	//CvSVM svm;
-
+	ofstream out("datetest.out");
 	Ptr<SVM> svm = SVM::create();
 	svm = StatModel::load<SVM>("trainedSVM.xml");
 	/*svm.load("trainedSVM.xml");*/
@@ -558,6 +486,7 @@ void predict()
 	string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\pic";
 	string fisierSeparat = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\pic";
 
+	out << 16 << '\n';
 	int poz = 0, neg = 0, rate = 0,  dogs = 0, moto = 0;
 	for (int i = 0; i < 16; ++i)
 	{
@@ -583,6 +512,11 @@ void predict()
 		vector< Point> locations1;
 
 		d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
+		for (int it = 0; it < descriptorsValues1.size(); ++it)
+		{
+			out << descriptorsValues1[it] << " ";
+		}
+		out << '\n';
 		Mat fm = Mat(descriptorsValues1);
 		fm = fm.reshape(1,1);
 

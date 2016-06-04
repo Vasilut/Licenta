@@ -9,6 +9,7 @@ namespace ANN
 {
     public class ReadFile
     {
+        // read the training data from file
         public List<Tuple<List<double>, double>> GetTrainingData()
         {
             var listLines = new List<Tuple<List<double>, double>>();
@@ -51,6 +52,7 @@ namespace ANN
             return listLines;
         }
 
+        //read the description of a picture for the ann implementation
         public List<double> GetPictureForAnn()
         {
             var listLines = new List<double>();
@@ -81,6 +83,7 @@ namespace ANN
             return listLines;
         }
 
+        //return the number coresponding to a photo for training data
         private double GetMultime(int x)
         {
             if (x >= 1 && x <= 36)
@@ -98,6 +101,7 @@ namespace ANN
                 return 4.0;
         }
 
+        //read the name of the pictures which are in the same category like the uploaded photo
         public static List<string> ReadListaPozeAsociate()
         {
 
@@ -120,6 +124,7 @@ namespace ANN
             return predictii;
         }
 
+        //read the test data
         public List<Tuple<List<double>, double>> GetTestData()
         {
             var listLines = new List<Tuple<List<double>, double>>();
@@ -162,6 +167,7 @@ namespace ANN
             return listLines;
         }
 
+        //return the number coresponding to a photo for test data
         private double GetMultimeTest(int x)
         {
             if (x >= 1 && x <= 4)

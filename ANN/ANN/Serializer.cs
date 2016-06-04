@@ -7,6 +7,7 @@ namespace ANN
     {
         public static void SaveNetwork(string path, ref NeuronalNetwork neuronalNetwork)
         {
+
             FileStream fs = new FileStream(path, FileMode.Create);
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(fs, neuronalNetwork);

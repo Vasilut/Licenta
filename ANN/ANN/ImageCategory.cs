@@ -21,6 +21,7 @@ namespace ANN
 
         private void buildGalery(List<string> listaPredictii)
         {
+            //showing the result of clasification and the picture from same category
             int x = 40;
             int y = 80;
             int maxHeight = -1;

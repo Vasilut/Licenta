@@ -95,7 +95,8 @@ namespace ANN
                 }
             }
         }
-
+        
+        //forward propagation
         public void Forward(List<double> trainingInputs, double target, int epoca)
         {
             //Load the initial input layer

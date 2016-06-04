@@ -18,7 +18,8 @@ namespace ANN
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //cand se scurge timpu
+            //the time is ticking
+            //showing a picture
             if (index < _listaPredictii.Count)
             {
                 pictureBox1.Image = Image.FromFile(_listaPredictii[index++]);

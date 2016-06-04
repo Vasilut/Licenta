@@ -20,19 +20,22 @@ namespace ANN
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ProcesInitiator.InitProcess("2");
+            //train svm
+            ProcesInitiator.GetProcesInitiator().InitProcess("2");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             //read the pictures from db, make the xml format with pictures descriptor and create the file with this descriptors
             //we need to run the c++ open cv app
-            ProcesInitiator.InitProcess("1");
+            ProcesInitiator.GetProcesInitiator().InitProcess("1");
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            //recognize a picture with smv
+
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Title = "Please select a picture";
             fileDialog.Multiselect = false;
@@ -42,7 +45,7 @@ namespace ANN
             {
                 string fileName = Path.GetFileName(fileDialog.FileName);
                 string parameter = "4 " + fileName;
-                ProcesInitiator.InitProcess(parameter);
+                ProcesInitiator.GetProcesInitiator().InitProcess(parameter);
                 var listaPredictii = ReadFile.ReadListaPozeAsociate();
                 new ImageCategory(listaPredictii[0], listaPredictii).Show();
                 new ImageSlideShow(listaPredictii[0], listaPredictii).Show();

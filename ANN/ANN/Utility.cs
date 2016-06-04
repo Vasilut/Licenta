@@ -8,6 +8,7 @@ namespace ANN
 {
     public class Utility
     {
+        //return the maximum number from a vector and the position
         public static Tuple<double,int> GetMaxim(double[] vector, int dim)
         {
             int pozMax = -1;

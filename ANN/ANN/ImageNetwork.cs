@@ -13,6 +13,7 @@ namespace ANN
         private TrainerAnn _trainAnn;
         private Dictionary<int, string> classes = new Dictionary<int, string>()
         {
+            //initialize the knows classes of picture
             [0] = "minge",
             [1] = "bere",
             [2] = "rata",
@@ -27,6 +28,7 @@ namespace ANN
         private void button1_Click(object sender, EventArgs e)
         {
             // browse for a picture
+
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Title = "Please select a picture";
             fileDialog.Multiselect = false;
@@ -39,14 +41,14 @@ namespace ANN
                 textBox1.Text = path;
                 pictureBox1.Image = Image.FromFile(path);
                 string parameter = "5 " + fileName;
-                ProcesInitiator.InitProcess(parameter);
+                ProcesInitiator.GetProcesInitiator().InitProcess(parameter);
                 button4.Enabled = true; //activam butonul de recognize
             }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            //clear button
+            //clear the picture, and the listbox
             textBox1.Text = "";
             pictureBox1.Image = null;
             label4.Text = "";
@@ -101,7 +103,7 @@ namespace ANN
 
         private void button5_Click(object sender, EventArgs e)
         {
-            //save current configuration
+            //save current configuration of neuronal network
             using (SaveFileDialog saveDialog = new SaveFileDialog())
             {
                 saveDialog.Filter = "Network File(*.net)|*.net";
@@ -133,6 +135,7 @@ namespace ANN
 
         private void button7_Click(object sender, EventArgs e)
         {
+            //showing grafics
             _trainAnn.TestRun(1);
             Dictionary<double,List<int> > obj = _trainAnn.DictionaryTestData;
             
