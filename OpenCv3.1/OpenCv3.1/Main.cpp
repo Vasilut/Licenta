@@ -84,11 +84,12 @@ using namespace cv::ml;
 
 void writeToFile(char fileName[dim], vector < vector < float > > descriere);
 vector < vector < float > > Mat2DToArray(int row, int col, Mat M2);
+void extractFeaturesFromPicture(string fileName);
 void svmTraining();
 void predict();
 float matrix[180][3780];
 int rows, cols;
-
+void predictAnImage(string filePath);
 int main(int argc, char* argv[])
 {
 
@@ -107,10 +108,10 @@ int main(int argc, char* argv[])
 			}
 		cout << argv[i] << " " << '\n';
 	}
-	while (1)
-	{
-		char ch; //= inputUser[0];
-				 //cout << ch << " ";
+	/*while (1)
+	{*/
+		char ch= inputUser[0];
+		cout << ch << " ";
 		cout << "Alege o optiune:" << '\n';
 		cout << "1. Citeste fotografii si salveaza continutul lor in fisiere" << '\n';
 		cout << "2. Antreneaza reteaua" << '\n';
@@ -248,18 +249,27 @@ int main(int argc, char* argv[])
 					{
 
 						string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\";
-						string fis = fileN + "pic10.png";  //fileN + string(picturesPath);
+						string fis = fileN + string(picturesPath);
 
 						cout << fis << '\n';
-						//predictAnImage(fis);
+						extractFeaturesFromPicture(fis);
 					}
 					else
+						if (ch == '5')
+						{
+							cin.get();
+							char picturePath[100];
+							cin.getline(picturePath, 100);
+							string fileN = "C:\\Users\\Lucian\\Documents\\Visual Studio 2015\\Projects\\OpenCVHogDescriptor\\pictures\\testData\\";
+							string fis = fileN + string(picturePath);
+							predictAnImage(fis);
+						}
+					else
 					{
-						/*cout << "Comanda eronata" << ch << '\n';
-						cin.get();*/
-						break;
+						cout << "Comanda eronata" << ch << '\n';
+						cin.get();
 					}
-	}
+	
 	return 0;
 }
 //#include <opencv2\highgui\highgui.hpp>
@@ -474,6 +484,43 @@ vector < vector < float > > Mat2DToArray(int row, int col, Mat M2)
 
 }
 
+void extractFeaturesFromPicture(string fileName)
+{
+	ofstream out("annfeature.out");
+
+	Mat img1 = imread(fileName);
+	if (img1.empty())
+	{
+		cout << " Citire incorecta ";
+		return;
+	}
+
+	Mat img1_gray;
+	cvtColor(img1, img1_gray, CV_RGB2GRAY);
+
+	Mat r_img1_gray;
+	//resize(img1_gray, r_img1_gray, Size(64, 8));
+	resize(img1_gray, r_img1_gray, Size(64, 128));
+
+	//HOGDescriptor d1(Size(64, 8), Size(8, 8), Size(4, 4), Size(4, 4), 9);
+	HOGDescriptor d1(Size(64, 128), Size(16, 16), Size(8, 8), Size(8, 8), 9);
+	vector< float> descriptorsValues1;
+	vector< Point> locations1;
+
+	d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
+	for (int it = 0; it < descriptorsValues1.size(); ++it)
+	{
+		out << descriptorsValues1[it] << " ";
+	}
+
+	imshow("picture", img1_gray);
+	cvDestroyWindow("picture");
+	waitKey(0);
+	img1.release();
+	img1_gray.release();
+	r_img1_gray.release();
+}
+
 void predict()
 {
 	//CvSVM svm;
@@ -558,4 +605,42 @@ void predict()
 
 	cout << " Mingi: " << poz << " Bere: " << neg << " Rate: " << rate << " Dogs: " << dogs << " " << " Moto: " << moto << '\n';
 	cin.get();
+}
+
+void predictAnImage(string filePath)
+{
+	Ptr<SVM> svm = SVM::create();
+	svm = StatModel::load<SVM>("trainedSVM.xml");
+
+	Mat img1 = imread(filePath);
+	if (img1.empty())
+	{
+		cout << " Citire incorecta";
+		return;
+	}
+	Mat img1_gray;
+	cvtColor(img1, img1_gray, CV_RGB2GRAY);
+
+	Mat r_img1_gray;
+	//resize(img1_gray, r_img1_gray, Size(64, 8));
+	resize(img1_gray, r_img1_gray, Size(64, 128));
+
+	//HOGDescriptor d1(Size(64, 8), Size(8, 8), Size(4, 4), Size(4, 4), 9);
+	HOGDescriptor d1(Size(64, 128), Size(16, 16), Size(8, 8), Size(8, 8), 9);
+	vector< float> descriptorsValues1;
+	vector< Point> locations1;
+
+	d1.compute(r_img1_gray, descriptorsValues1, Size(0, 0), Size(0, 0), locations1);
+	Mat fm = Mat(descriptorsValues1);
+	fm = fm.reshape(1, 1);
+
+	//Classification whether data is positive or negative
+	int result = svm->predict(fm);
+
+
+	imshow("picture", img1_gray);
+	cvDestroyWindow("picture");
+	waitKey(0);
+
+	cout << result << '\n';
 }

@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{f7a83978-d0d8-471b-8e5a-a7500d9c7357}</ProjectGuid>
+    <ProjectGuid>{00000000-0000-0000-0000-000000000000}</ProjectGuid>
     <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
-    <Name>ModelingProject2</Name>
-    <RootNamespace>ModelingProject2</RootNamespace>
+    <Name>ModelingProjectAnn</Name>
+    <RootNamespace>ModelingProjectAnn</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -22,42 +22,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="ModelDefinition\Package1_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package2_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package3_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package4_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package5_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package6_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package7_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package8_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="ModelDefinition\Package_1728.uml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="UMLClassDiagram1.classdiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="UMLClassDiagram1.classdiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>UMLClassDiagram1.classdiagram</DependentUpon>
-    </Content>
     <Folder Include="ModelDefinition\" />
-    <Content Include="ModelDefinition\ModelingProject2.uml">
+    <Content Include="ModelDefinition\ModelingProjectAnn.uml">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>

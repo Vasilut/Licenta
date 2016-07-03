@@ -43,6 +43,7 @@ namespace ANN
                 string parameter = "5 " + fileName;
                 ProcesInitiator.GetProcesInitiator().InitProcess(parameter);
                 button4.Enabled = true; //activam butonul de recognize
+                label4.Text = string.Empty;
             }
         }
 

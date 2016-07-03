@@ -23,7 +23,7 @@ namespace ANN
             //trainerAnn.DoTrain(5000);
             //Serializer.SaveNetwork("BigNetwork.net", ref neuronalNetwork);
             //Console.WriteLine("Antrenare completa");
-            
+
             ////NeuronalNetwork nr = Serializer.LoadNetwork("serializat.net");
             ////TrainerAnn trainerAnn = new TrainerAnn(ref nr, rd, true);
             //trainerAnn.TestRun(3000);

@@ -16,10 +16,10 @@ namespace ANN
         {
             InitializeComponent();
             label4.Text = word;
-            buildGalery(predictii);
+            BuildGalery(predictii);
         }
 
-        private void buildGalery(List<string> listaPredictii)
+        private void BuildGalery(List<string> listaPredictii)
         {
             //showing the result of clasification and the picture from same category
             int x = 40;
